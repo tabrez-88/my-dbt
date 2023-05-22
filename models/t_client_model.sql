@@ -33,7 +33,7 @@ WITH transformed AS (
     activationdate::date AS activation_date,
     closeddate::date AS closedon_date
   FROM 
-    {{ ref('final_client') }} -- This assumes you have a dbt source or model named final_client
+     "public"."final_client" -- This assumes you have a dbt source or model named final_client
 )
 
 SELECT * FROM transformed
