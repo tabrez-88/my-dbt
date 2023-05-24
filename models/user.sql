@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 SELECT *
-FROM "{{ source('public', 'user') }}"
+FROM user
