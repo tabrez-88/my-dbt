@@ -1,0 +1,11 @@
+carbon_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: mysql
+      host: host.docker.internal
+      user: root
+      pass: mysql
+      dbname: carbon_default
+      port: 3306
+      schema: carbon_default
