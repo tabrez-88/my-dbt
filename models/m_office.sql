@@ -1,9 +1,9 @@
 WITH source AS (
     SELECT
-        "ENCODEDKEY" as external_id,
-        "ID" as id,
-        "NAME" as name,
-        "CREATIONDATE" as opening_date
+        ENCODEDKEY as external_id,
+        ID as id,
+        NAME as name,
+        CREATIONDATE as opening_date
     FROM branch
 )
 
