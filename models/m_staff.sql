@@ -23,4 +23,4 @@ SELECT
     NULL AS image_id  -- Assuming there's no equivalent field in the source table
 
 FROM {{ ref('user') }} AS u
-LEFT JOIN branch_office AS bo ON u."AssignedBranchKey" = bo.office_external_id
+LEFT JOIN branch_office AS bo ON u."assignedbranchkey" = bo.office_external_id
