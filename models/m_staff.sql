@@ -5,6 +5,13 @@ WITH branch_office AS (
         external_id AS office_external_id,
         id AS office_id
     FROM {{ ref('m_office') }}
+),
+roles AS (
+    SELECT 
+        id AS role_id,
+        name AS organisational_role_enum,
+        ENCODEDKEY AS role_encoded_key
+    FROM {{ ref('role') }}
 )
 
 SELECT 
@@ -17,7 +24,7 @@ SELECT
     u.MOBILEPHONE1 AS mobile_no,
     u.EMAIL AS email_address,
     u.ENCODEDKEY as external_id,
-    NULL AS organisational_role_enum, -- Since we're ignoring ROLE_ENCODEDKEY_OID
+    r.organisational_role_enum,
     NULL AS organisational_role_parent_staff_id, -- Assuming there's no equivalent field in the source table
     CASE WHEN u.USERSTATE = 'ACTIVE' THEN TRUE ELSE FALSE END AS is_active,
     u.CREATIONDATE AS joining_date,
@@ -25,3 +32,4 @@ SELECT
 
 FROM {{ ref('user') }} AS u
 LEFT JOIN branch_office AS bo ON u."assignedbranchkey" = bo.office_external_id
+LEFT JOIN roles AS r ON u.ROLE_ENCODEDKEY_OID = r.role_encoded_key
