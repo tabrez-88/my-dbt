@@ -7,7 +7,7 @@ WITH user_office AS (
         u.USERNAME AS username,
         u.FIRSTNAME AS firstname,
         u.LASTNAME AS lastname,
-        u.PASSWORD AS password,
+        u."PASSWORD" AS password,
         u.EMAIL AS email,
         s.office_id
     FROM {{ ref('user') }} AS u
