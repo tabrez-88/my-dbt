@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 SELECT 
-    r."ID"::bigint as id,
+    {{ decode_base64(r."ID") }}  as id,
     r."NAME" as name,
     'No description available' as description,
     FALSE as is_disabled
