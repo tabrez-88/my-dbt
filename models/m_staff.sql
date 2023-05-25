@@ -8,8 +8,8 @@ WITH branch_office AS (
 ),
 roles AS (
     SELECT 
-        id AS role_id,
-        name AS organisational_role_enum,
+        "id" AS role_id,
+        "name" AS organisational_role_enum,
         ENCODEDKEY AS role_encoded_key
     FROM {{ ref('role') }}
 )
