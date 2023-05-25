@@ -8,7 +8,7 @@ WITH branch_office AS (
 )
 
 SELECT 
-    u.ID AS id,
+    u."ID" AS id,
     CASE WHEN u.ISCREDITOFFICER = b'1' THEN TRUE ELSE FALSE END AS is_loan_officer,
     bo.office_id,
     u.FIRSTNAME AS firstname,
