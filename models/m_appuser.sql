@@ -3,7 +3,7 @@
 WITH user_office AS (
     SELECT 
         u.ENCODEDKEY AS user_external_id,
-        u.ID AS id,
+        u."ID" AS id,
         u.USERNAME AS username,
         u.FIRSTNAME AS firstname,
         u.LASTNAME AS lastname,
