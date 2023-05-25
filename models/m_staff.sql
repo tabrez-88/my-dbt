@@ -16,6 +16,7 @@ SELECT
     u.USERNAME AS display_name,
     u.MOBILEPHONE1 AS mobile_no,
     u.EMAIL AS email_address,
+    u.ENCODEDKEY as external_id,
     NULL AS organisational_role_enum, -- Since we're ignoring ROLE_ENCODEDKEY_OID
     NULL AS organisational_role_parent_staff_id, -- Assuming there's no equivalent field in the source table
     CASE WHEN u.USERSTATE = 'ACTIVE' THEN TRUE ELSE FALSE END AS is_active,
