@@ -1,8 +1,11 @@
+{% macro decode_base64(field) %}
+    DECODE({{ field }}, 'base64')
+{% endmacro %}
 WITH source AS (
     SELECT
         ENCODEDKEY as external_id,
         "ID" as id,
-        "NAME" as name,
+        {{ decode_base64("NAME") }} AS name,
         CREATIONDATE as opening_date
     FROM branch
 )
