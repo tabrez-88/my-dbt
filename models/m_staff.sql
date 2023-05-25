@@ -2,7 +2,7 @@
 
 WITH branch_office AS (
     SELECT 
-        "ENCODEDKEY" AS office_external_id,
+        external_id AS office_external_id,
         id AS office_id
     FROM {{ ref('m_office') }}
 )
