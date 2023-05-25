@@ -1,4 +1,4 @@
 {% macro decode_base64(field) %}
     -- Implementation for PostgreSQL
-     DECODE({{ field }}, 'base64')
+    convert_from(decode({{ field }}, 'base64'), 'UTF8')
 {% endmacro %}
