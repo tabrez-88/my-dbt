@@ -1,6 +1,3 @@
-{% macro decode_base64(field) %}
-    DECODE({{ field }}, 'base64')
-{% endmacro %}
 WITH source AS (
     SELECT
         ENCODEDKEY as external_id,
