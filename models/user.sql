@@ -1,4 +1,4 @@
 {{ config(materialized='table') }}
 
 SELECT *
-FROM user
+FROM fineract_default.public."user";
