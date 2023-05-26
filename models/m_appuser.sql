@@ -4,11 +4,11 @@ WITH user_office AS (
     SELECT 
         u.ENCODEDKEY AS user_external_id,
         u."ID" AS id,
-        u.USERNAME AS username,
-        u.FIRSTNAME AS firstname,
-        u.LASTNAME AS lastname,
-        u."PASSWORD" AS password,
-        u.EMAIL AS email,
+        decode_base64_or_text(u.USERNAME) AS username,
+        decode_base64_or_text(u.FIRSTNAME) AS firstname,
+        decode_base64_or_text(u.LASTNAME) AS lastname,
+        decode_base64_or_text(u."PASSWORD") AS password,
+        decode_base64_or_text(u.EMAIL) AS email,
         s.office_id
     FROM {{ ref('user') }} AS u
     LEFT JOIN {{ ref('m_staff') }} AS s ON u.ENCODEDKEY = s.external_id
