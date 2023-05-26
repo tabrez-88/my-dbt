@@ -7,29 +7,29 @@
 WITH base AS (
     SELECT 
         ROW_NUMBER() OVER () as id,
-        convert_from(decode(fcl."encodedkey", 'base64'), 'UTF-8') as external_id,
-        convert_from(decode(fcl."assigneduserkey", 'base64'), 'UTF-8') as created_by,
-        convert_from(decode(fcl."assigneduserkey", 'base64'), 'UTF-8')as last_modified_by,
+        decode_base64_or_text(fcl."encodedkey") as external_id,
+        decode_base64_or_text(fcl."assigneduserkey") as created_by,
+        decode_base64_or_text(fcl."assigneduserkey")as last_modified_by,
         fcl."birthdate" as date_of_birth,
         fcl."creationdate" as submittedon_date,
         fcl."emailaddress" as email_address,
-        convert_from(decode(fcl."firstname", 'base64'), 'UTF-8') as firstname,
+        decode_base64_or_text(fcl."firstname") as firstname,
         fcl."middlename" as middlename,
-        convert_from(decode(fcl."lastname", 'base64'), 'UTF-8') as lastname,
-        (SELECT id FROM m_code_value WHERE code_value = convert_from(decode(fcl."gender", 'base64'), 'UTF-8') )  as gender_cv_id,
+        decode_base64_or_text(fcl."lastname") as lastname,
+        (SELECT id FROM m_code_value WHERE code_value = decode_base64_or_text(fcl."gender"))  as gender_cv_id,
         fcl."lastmodifieddate" as last_modified_on_utc,
         fcl."lastmodifieddate" as updated_on,
-        convert_from(decode(fcl."profilepicturekey", 'base64'), 'UTF-8') as image_id,
-        convert_from(decode(fcl."profilesignaturekey", 'base64'), 'UTF-8') as signature_id,
-        convert_from(decode(fcl."ID", 'base64'), 'UTF-8') as account_no,
-        convert_from(decode(fcl."mobilephone1", 'base64'), 'UTF-8') as mobile_no,
-        convert_from(decode(fcl."assignedbranchkey", 'base64'), 'UTF-8') as office_id,
+        decode_base64_or_text(fcl."profilepicturekey") as image_id,
+        decode_base64_or_text(fcl."profilesignaturekey") as signature_id,
+        decode_base64_or_text(fcl."ID") as account_no,
+        decode_base64_or_text(fcl."mobilephone1") as mobile_no,
+        decode_base64_or_text(fcl."assignedbranchkey") as office_id,
         CASE 
-            WHEN convert_from(decode(fcl."STATE", 'base64'), 'UTF-8') = 'ACTIVE' THEN 300 
-            WHEN convert_from(decode(fcl."STATE", 'base64'), 'UTF-8') = 'EXITED' THEN 600
-            WHEN convert_from(decode(fcl."STATE", 'base64'), 'UTF-8') = 'REJECTED' THEN 700
-            WHEN convert_from(decode(fcl."STATE", 'base64'), 'UTF-8') = 'PENDING_APPROVAL' THEN 100
-            WHEN convert_from(decode(fcl."STATE", 'base64'), 'UTF-8') = 'BLACKLISTED' THEN 400
+            WHEN decode_base64_or_text(fcl."STATE") = 'ACTIVE' THEN 300 
+            WHEN decode_base64_or_text(fcl."STATE") = 'EXITED' THEN 600
+            WHEN decode_base64_or_text(fcl."STATE") = 'REJECTED' THEN 700
+            WHEN decode_base64_or_text(fcl."STATE") = 'PENDING_APPROVAL' THEN 100
+            WHEN decode_base64_or_text(fcl."STATE") = 'BLACKLISTED' THEN 400
             ELSE 0 
         END as status_enum,
         fcl."activationdate" as activation_date,
