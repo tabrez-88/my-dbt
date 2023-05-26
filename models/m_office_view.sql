@@ -4,12 +4,12 @@ WITH source AS (
         "ID" as id,
         {{ decode_base64("NAME") }} AS name,
         CREATIONDATE as opening_date
-    FROM branch
+    FROM final_branch
 )
 
 SELECT
     id::int8 as id,
-    NULL as parent_id,
+    cast(NULL as int8) as parent_id,
     NULL as hierarchy,
     external_id,
     name,
