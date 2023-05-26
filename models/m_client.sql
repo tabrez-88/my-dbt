@@ -18,11 +18,11 @@ WITH final_client_mapping AS (
         {{ decode_base64(fcl.MOBILEPHONE1) }} as mobile_no,
         m_office.id as office_id,
         CASE 
-            WHEN {{ decode_base64(fcl."STATE") }} = 'ACTIVE' THEN 300
-            WHEN {{ decode_base64(fcl."STATE") }} = 'EXITED' THEN 600
-            WHEN {{ decode_base64(fcl."STATE") }} = 'REJECTED' THEN 700
-            WHEN {{ decode_base64(fcl."STATE") }} = 'PENDING_APPROVAL' THEN 100
-            WHEN {{ decode_base64(fcl."STATE") }} = 'BLACKLISTED' THEN 500
+            WHEN {{ decode_base64("'STATE'") }} = 'ACTIVE' THEN 300
+            WHEN {{ decode_base64("'STATE'") }} = 'EXITED' THEN 600
+            WHEN {{ decode_base64("'STATE'") }} = 'REJECTED' THEN 700
+            WHEN {{ decode_base64("'STATE'") }} = 'PENDING_APPROVAL' THEN 100
+            WHEN {{ decode_base64("'STATE'") }} = 'BLACKLISTED' THEN 500
             ELSE 0
         END as status_enum,
         fcl.ACTIVATIONDATE as activation_date,
