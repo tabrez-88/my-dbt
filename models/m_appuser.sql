@@ -2,13 +2,13 @@
 
 WITH user_office AS (
     SELECT 
-        u.ENCODEDKEY AS user_external_id,
+        {{ decode_base64(u.ENCODEDKEY) }} AS user_external_id,
         u."ID" AS id,
-        decode_base64_or_text(u.USERNAME) AS username,
-        decode_base64_or_text(u.FIRSTNAME) AS firstname,
-        decode_base64_or_text(u.LASTNAME) AS lastname,
-        decode_base64_or_text(u."PASSWORD") AS password,
-        decode_base64_or_text(u.EMAIL) AS email,
+        {{ decode_base64(u.USERNAME) }} AS username,
+        {{ decode_base64(u.FIRSTNAME) }} AS firstname,
+        {{ decode_base64(u.LASTNAME) }} AS lastname,
+        {{ decode_base64(u."PASSWORD") }} AS password,
+        {{ decode_base64(u.EMAIL) }} AS email,
         s.office_id
     FROM {{ ref('user') }} AS u
     LEFT JOIN {{ ref('m_staff') }} AS s ON u.ENCODEDKEY = s.external_id
