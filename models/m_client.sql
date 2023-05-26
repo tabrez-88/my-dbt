@@ -27,7 +27,7 @@ WITH final_client_mapping AS (
         END as status_enum,
         fcl.ACTIVATIONDATE as activation_date,
         fcl.CLOSEDDATE as closedon_date
-    FROM {{ ref('fcl') }} AS fcl
+    FROM {{ ref('final_client') }} AS fcl
     LEFT JOIN {{ ref('m_staff') }} AS m_staff ON decode_base64_or_text(fcl.ASSIGNEDUSERKEY) = m_staff.external_id
     LEFT JOIN {{ ref('m_office') }} AS m_office ON decode_base64_or_text(fcl.ASSIGNEDBRANCHKEY) = m_office.external_id
 )
