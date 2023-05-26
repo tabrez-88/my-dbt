@@ -12,7 +12,7 @@ WITH final_client_mapping AS (
         {{ decode_base64(fcl.FIRSTNAME) }} as firstname,
         {{ decode_base64(fcl.MIDDLENAME) }} as middlename,
         {{ decode_base64(fcl.LASTNAME) }} as lastname,
-       (SELECT id FROM m_code_value WHERE code_value = {{ decode_base64(fcl."gender") }})  as gender_cv_id,
+        (SELECT id FROM m_code_value WHERE code_value = {{ decode_base64("'gender'") }})  as gender_cv_id,
         fcl.LASTMODIFIEDDATE as last_modified_on_utc,
         fcl.LASTMODIFIEDDATE as updated_on,
         {{ decode_base64(fcl.MOBILEPHONE1) }} as mobile_no,
