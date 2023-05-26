@@ -32,4 +32,4 @@ WITH final_client_mapping AS (
     LEFT JOIN {{ ref('m_office') }} AS m_office ON decode_base64_or_text(fcl.ASSIGNEDBRANCHKEY) = m_office.external_id
 )
 
-SELECT * FROM final_client_mapping;
+SELECT * FROM final_client_mapping
