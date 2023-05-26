@@ -15,7 +15,7 @@ roles AS (
 )
 
 SELECT 
-     {{ decode_base64(u."ID") }} AS id,
+     {{ decode_base64("'ID'") }} AS id,
     CASE WHEN u.ISCREDITOFFICER = '1' THEN TRUE ELSE FALSE END AS is_loan_officer,
     bo.office_id,
     {{ decode_base64(u.FIRSTNAME) }} AS firstname,
