@@ -1,0 +1,20 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
+
+SELECT 
+    {{ decode_base64("encodedkey") }} as external_id,
+    office.id as office_id,
+    staff.id as staff_id,
+    "CREATIONDATE" as submittedon_date,
+    {{ decode_base64("groupname") }} as display_name,
+    {{ decode_base64("ID") }} as account_no,
+    300 as status_enum, -- default value for status_enum in your PostgreSQL table
+    1 as level_id -- assuming some default value for level_id, replace as appropriate
+FROM {{ ref('final_group') }}
+LEFT JOIN {{ ref('m_office_view') }} as office
+ON {{ decode_base64("ASSIGNEDBRANCHKEY") }} = office.external_id
+LEFT JOIN {{ ref('m_staff_view') }} as staff
+ON {{ decode_base64("ASSIGNEDUSERKEY") }} = staff.external_id
