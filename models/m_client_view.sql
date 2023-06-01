@@ -20,7 +20,7 @@ WITH base AS (
         "lastmodifieddate" as updated_on,
         {{ decode_base64("profilepicturekey") }} as image_id,
         {{ decode_base64("profilesignaturekey") }} as signature_id,
-        "ID" as account_no,
+        "ID" as account_no,*/
         {{ decode_base64("mobilephone1") }} as mobile_no,
         {{ decode_base64("assignedbranchkey") }} as office_id,
         CASE 
@@ -30,7 +30,7 @@ WITH base AS (
             WHEN {{ decode_base64("STATE") }} = 'PENDING_APPROVAL' THEN 100
             WHEN {{ decode_base64("STATE") }} = 'BLACKLISTED' THEN 400
             ELSE 0 
-        END as status_enum,*/
+        END as status_enum,
         "activationdate" as activation_date,
         "closeddate" as closedon_date
         FROM {{ ref('final_client') }}
