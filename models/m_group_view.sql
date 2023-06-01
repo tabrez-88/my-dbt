@@ -8,7 +8,7 @@ SELECT
     {{ decode_base64("encodedkey") }} as external_id,
     office.id as office_id,
     staff.id as staff_id,
-    "CREATIONDATE" as submittedon_date,
+    "creationdate" as submittedon_date,
     {{ decode_base64("groupname") }} as display_name,
     {{ decode_base64("ID") }} as account_no,
     300 as status_enum, -- default value for status_enum in your PostgreSQL table
