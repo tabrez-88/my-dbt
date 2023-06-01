@@ -13,4 +13,4 @@ SELECT
     NULL as code_score,
     true as is_active,
     false as is_mandatory
-FROM {{ ref('grouprolename') }}
+FROM grouprolename
