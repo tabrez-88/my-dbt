@@ -1,15 +1,15 @@
 WITH source AS (
     SELECT
-        ENCODEDKEY as external_id,
+        {{ decode_base64(ENCODEDKEY)}} as external_id,
         "ID" as id,
         {{ decode_base64("NAME") }} AS name,
         CREATIONDATE as opening_date
-    FROM final_branch
+    FROM branch
 )
 
 SELECT
     id::int8 as id,
-    cast(NULL as int8) as parent_id,
+    NULL as parent_id,
     NULL as hierarchy,
     external_id,
     name,
