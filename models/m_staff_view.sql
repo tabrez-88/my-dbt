@@ -12,6 +12,12 @@ roles AS (
         {{ decode_base64("NAME") }} AS organisational_role_enum,
         {{ decode_base64("encodedkey") }} AS role_encoded_key
     FROM {{ ref('role') }}
+),
+user_with_decoded_keys AS (
+    SELECT *,
+        {{ decode_base64("assignedbranchkey") }} AS decoded_assignedbranchkey,
+        {{ decode_base64("role_encodedkey_oid") }} AS decoded_role_encodedkey_oid
+    FROM {{ ref('user') }}
 )
 
 SELECT 
@@ -25,12 +31,11 @@ SELECT
     u.MOBILEPHONE1 AS mobile_no,
     u.EMAIL AS email_address,
     u.ENCODEDKEY as external_id,
-
-    NULL AS organisational_role_parent_staff_id, -- Assuming there's no equivalent field in the source table
+    NULL AS organisational_role_parent_staff_id, 
     CASE WHEN u.USERSTATE = 'ACTIVE' THEN TRUE ELSE FALSE END AS is_active,
     u.CREATIONDATE AS joining_date,
-    NULL AS image_id  -- Assuming there's no equivalent field in the source table*/
+    NULL AS image_id  */
 
-FROM {{ ref('user') }} AS u
-LEFT JOIN branch_office AS bo ON {{ decode_base64(u.assignedbranchkey) }}= bo.office_external_id
-LEFT JOIN roles AS r ON {{ decode_base64(u.role_encodedkey_oid) }}= r.role_encoded_key
+FROM user_with_decoded_keys AS u
+LEFT JOIN branch_office AS bo ON u.decoded_assignedbranchkey = bo.office_external_id
+LEFT JOIN roles AS r ON u.decoded_role_encodedkey_oid = r.role_encoded_key
