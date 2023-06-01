@@ -33,4 +33,4 @@ SELECT
 
 FROM {{ ref('user') }} AS u
 LEFT JOIN branch_office AS bo ON u."assignedbranchkey" = bo.office_external_id
-LEFT JOIN roles AS r ON {{ decode_base64(u."role_encodedkey_oid")}} = r.role_encoded_key
+LEFT JOIN roles AS r ON {{ decode_base64(u.role_encodedkey_oid)}} = r.role_encoded_key
