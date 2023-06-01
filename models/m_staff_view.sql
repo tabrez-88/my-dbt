@@ -10,7 +10,7 @@ roles AS (
     SELECT 
         {{ decode_base64("ID") }} AS role_id,
         {{ decode_base64("NAME") }} AS organisational_role_enum,
-        {{ decode_base64("ENCODEDKEY") }} AS role_encoded_key
+        {{ decode_base64("encodedkey") }} AS role_encoded_key
     FROM {{ ref('role') }}
 )
 
