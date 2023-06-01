@@ -12,9 +12,9 @@ WITH base AS (
         {{ decode_base64("assigneduserkey") }} as last_modified_by,
         "birthdate" as date_of_birth,
         "creationdate" as submittedon_date,
-        /*{{ decode_base64("emailaddress") }} as email_address,
+        /*{{ decode_base64("emailaddress") }} as email_address,*/
         {{ decode_base64("firstname") }} as firstname,
-        {{ decode_base64("lastname") }} as lastname,*/
+        {{ decode_base64("lastname") }} as lastname,
         (SELECT id FROM m_code_value WHERE code_value = {{ decode_base64("gender") }})  as gender_cv_id,
         "lastmodifieddate" as last_modified_on_utc,
         "lastmodifieddate" as updated_on,
