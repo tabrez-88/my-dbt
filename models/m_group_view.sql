@@ -15,6 +15,6 @@ SELECT
     1 as level_id -- assuming some default value for level_id, replace as appropriate
 FROM {{ ref('final_group') }}
 LEFT JOIN {{ ref('m_office_view') }} as office
-ON {{ decode_base64("ASSIGNEDBRANCHKEY") }} = office.external_id
+ON {{ decode_base64("assignedbranchkey") }} = office.external_id
 LEFT JOIN {{ ref('m_staff_view') }} as staff
-ON {{ decode_base64("ASSIGNEDUSERKEY") }} = staff.external_id
+ON {{ decode_base64("assigneduserkey") }} = staff.external_id
