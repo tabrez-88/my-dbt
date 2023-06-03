@@ -9,12 +9,12 @@
 SELECT 
     {{ decode_base64("encodedkey") }} as external_id,
     "ID" as account_no,
-   (CASE 
+   /*(CASE 
         WHEN {{ decode_base64("accountholdertype") }} = 'CLIENT' THEN (SELECT id FROM m_client_view WHERE external_id = {{ decode_base64("accountholderkey") }})
         WHEN {{ decode_base64("accountholdertype") }} = 'GROUP' THEN (SELECT id FROM m_group_view WHERE external_id = {{ decode_base64("accountholderkey") }})
         ELSE NULL
     END) as client_id_group_id,
-    /* {{ decode_base64("accountholdertype") }} as legal_form_id,
+     {{ decode_base64("accountholdertype") }} as legal_form_id,
     {{ decode_base64("accountstate") }} as loan_status_id,
     {{ decode_base64("accountsubstate") }} as loan_sub_status_id,
     (SELECT id FROM m_office_view WHERE external_id = assignedbranchkey) as office_id,
