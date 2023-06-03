@@ -5,6 +5,7 @@
 }}
 
 SELECT 
+    ROW_NUMBER() OVER () as id,
     {{ decode_base64("encodedkey") }} as external_id,
     office.id as office_id,
     staff.id as staff_id,
