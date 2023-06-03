@@ -48,7 +48,7 @@ WITH source AS (
 )
 
 SELECT
-    cast(NULL as int8) as id,
+    ROW_NUMBER() OVER () as id,
     NULL as short_name,
     {{ decode_base64("currency_code") }} currency_code,
     cast(0 as int4) as currency_digits,
