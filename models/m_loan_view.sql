@@ -8,7 +8,7 @@
 
 SELECT 
     {{ decode_base64("encodedkey") }} as external_id,
-    {{ decode_base64("ID") }} as account_no,
+    "ID" as account_no,
     (CASE 
         WHEN {{ decode_base64("accountholdertype") }} = 'CLIENT' THEN (SELECT id FROM m_client_view WHERE external_id = {{ decode_base64("accountholderkey") }})
         WHEN {{ decode_base64("accountholdertype") }} = 'GROUP' THEN (SELECT id FROM m_group_view WHERE external_id = {{ decode_base64("accountholderkey") }})
