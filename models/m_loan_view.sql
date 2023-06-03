@@ -8,8 +8,8 @@
 
 SELECT 
     {{ decode_base64("encodedkey") }} as external_id,
-    "ID" as account_no,
-    (CASE 
+    "ID" as account_no
+    /*(CASE 
         WHEN {{ decode_base64("accountholdertype") }} = 'CLIENT' THEN (SELECT id FROM m_client_view WHERE external_id = {{ decode_base64("accountholderkey") }})
         WHEN {{ decode_base64("accountholdertype") }} = 'GROUP' THEN (SELECT id FROM m_group_view WHERE external_id = {{ decode_base64("accountholderkey") }})
         ELSE NULL
@@ -35,5 +35,5 @@ SELECT
     interestrate as nominal_interest_rate_per_period,
     interestdue as interest_charged_derived,
     feesdue as fee_charges_charged_derived,
-    feespaid as fee_charges_repaid_derived
+    feespaid as fee_charges_repaid_derived*/
 FROM {{ source_table }}
