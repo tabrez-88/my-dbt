@@ -15,6 +15,7 @@ WITH decoded_loantransaction AS (
         INTERESTAMOUNT AS interest_portion_derived,
         FEESAMOUNT AS fee_charges_portion_derived,
         PENALTYAMOUNT AS penalty_charges_portion_derived,
+        transactionid as id,
         /*PRINCIPALBALANCE AS outstanding_loan_balance_derived, -- not sure maybe ?*/
         {{ decode_base64("branchkey") }} AS branch_key,
         {{ decode_base64("userkey") }} AS user_key
@@ -23,7 +24,7 @@ WITH decoded_loantransaction AS (
 loan_transactions AS (
     SELECT 
         dlt.external_id,
-        transactionid as id,
+        dlt.id,
         dlt.amount,
         dlt.outstanding_loan_balance_derived,
         mv_office.id AS office_id,
