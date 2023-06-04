@@ -15,7 +15,7 @@ WITH decoded_loantransaction AS (
         INTERESTAMOUNT AS interest_portion_derived,
         FEESAMOUNT AS fee_charges_portion_derived,
         PENALTYAMOUNT AS penalty_charges_portion_derived,
-        PRINCIPALBALANCE AS outstanding_loan_balance_derived,
+        /*PRINCIPALBALANCE AS outstanding_loan_balance_derived, -- not sure maybe ?*/
         {{ decode_base64("branchkey") }} AS branch_key,
         {{ decode_base64("userkey") }} AS user_key
     FROM {{ ref('final_loantransaction') }}
