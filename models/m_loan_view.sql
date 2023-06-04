@@ -53,7 +53,7 @@ FROM base b
 LEFT JOIN client_view cv
     ON b.decoded_accountholderkey = cv.external_id
 LEFT JOIN group_view gv
-    ON b.decoded_accountholderkey = gv.external_id;
+    ON b.decoded_accountholderkey = gv.external_id
 /*
 
 {{
