@@ -30,7 +30,7 @@ loan_transactions AS (
         mv_office.id AS office_id,
         /*dlt.payment_detail_id,*/
         dlt.created_date,
-        mv_loan.id AS loan_id,
+        mv_loan.account_no AS loan_id,
        /* get_transaction_type_enum(dlt.transaction_type) AS transaction_type_enum,*/
         mv_staff.id AS created_by,
         dlt.transaction_date,
