@@ -23,11 +23,13 @@ WITH decoded_loantransaction AS (
 loan_transactions AS (
     SELECT 
         dlt.external_id,
+        transactionid as id,
         dlt.amount,
         dlt.outstanding_loan_balance_derived,
         mv_office.id AS office_id,
         /*dlt.payment_detail_id,*/
         dlt.created_date,
+        mv_loan.id AS loan_id,
        /* get_transaction_type_enum(dlt.transaction_type) AS transaction_type_enum,*/
         mv_staff.id AS created_by,
         dlt.transaction_date,
@@ -42,7 +44,6 @@ loan_transactions AS (
 )
 
 SELECT 
-    lt.*,
-    mv_loan.id AS loan_id
+    lt.*
 FROM loan_transactions AS lt
 LEFT JOIN {{ ref('m_loan_view') }} AS mv_loan ON lt.external_id = mv_loan.external_id
