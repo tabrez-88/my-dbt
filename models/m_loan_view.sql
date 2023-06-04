@@ -10,7 +10,9 @@ WITH base AS (
         {{ decode_base64("accountholdertype") }} as decoded_accountholdertype,
         {{ decode_base64("accountholderkey") }} as decoded_accountholderkey,
         {{ decode_base64("interestcalculationmethod") }} as decoded_interestcalculationmethod,
-        {{ decode_base64("interestchargefrequency") }} as decoded_interestchargefrequency
+        {{ decode_base64("interestchargefrequency") }} as decoded_interestchargefrequency,
+        {{ decode_base64("assignedbranchkey") }} as decoded_assignedbranchkey,
+        {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey
     FROM {{ ref('final_loanaccount') }}
 ),
 
@@ -22,6 +24,14 @@ client_view AS (
 group_view AS (
     SELECT * 
     FROM m_group_view
+),
+office_view AS (
+    SELECT * 
+    FROM m_office_view
+),
+staff_view AS (
+    SELECT *
+    FROM m_staff_view
 )
 
 SELECT 
@@ -32,6 +42,8 @@ SELECT
         WHEN b.decoded_accountholdertype = 'GROUP' THEN gv.id
         ELSE NULL
     END as client_id_group_id,
+    ov.id as office_id,
+    sv.id as created_by,
     b.closeddate as closedon_date,
     b.creationdate as created_on_utc,
     b.approveddate as approvedon_date,
@@ -54,6 +66,10 @@ LEFT JOIN client_view cv
     ON b.decoded_accountholderkey = cv.external_id
 LEFT JOIN group_view gv
     ON b.decoded_accountholderkey = gv.external_id
+LEFT JOIN office_view ov 
+    ON b.decoded_assignedbranchkey = ov.external_id    
+LEFT JOIN staff_view sv 
+    ON b.decoded_assigneduserkey = sv.external_id    
 /*
 
 {{
