@@ -26,16 +26,15 @@ loan_transactions AS (
         dlt.amount,
         dlt.outstanding_loan_balance_derived,
         mv_office.id AS office_id,
-        dlt.payment_detail_id,
+        /*dlt.payment_detail_id,*/
         dlt.created_date,
-        get_transaction_type_enum(dlt.transaction_type) AS transaction_type_enum,
+       /* get_transaction_type_enum(dlt.transaction_type) AS transaction_type_enum,*/
         mv_staff.id AS created_by,
         dlt.transaction_date,
         dlt.principal_portion_derived,
         dlt.interest_portion_derived,
         dlt.fee_charges_portion_derived,
-        dlt.penalty_charges_portion_derived,
-        dlt.outstanding_loan_balance_derived
+        dlt.penalty_charges_portion_derived
     FROM decoded_loantransaction AS dlt
     LEFT JOIN {{ ref('m_office_view') }} AS mv_office ON dlt.branch_key = mv_office.external_id
     LEFT JOIN {{ ref('m_staff_view') }} AS mv_staff ON dlt.user_key = mv_staff.external_id
