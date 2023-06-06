@@ -8,7 +8,7 @@ WITH decoded_repayment AS (
         PRINCIPALPAID as principal_completed_derived,
         INTERESTDUE as interest_amount,
         INTERESTPAID as interest_completed_derived
-    FROM repayment
+    FROM {{ ref('repayment') }}
 ),
 repayment_with_loan_id AS (
     SELECT 
