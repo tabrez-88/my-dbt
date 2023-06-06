@@ -50,7 +50,7 @@ loan_transactions AS (
     LEFT JOIN {{ ref('m_office_view') }} AS mv_office ON dlt.branch_key = mv_office.external_id
     LEFT JOIN {{ ref('m_staff_view') }} AS mv_staff ON dlt.user_key = mv_staff.external_id
     LEFT JOIN {{ ref('m_loan_view') }} AS mv_loan ON dlt.parent_id = mv_loan.external_id
-    LEFT JOIN public.r_enum_value AS re ON (tm.mapped = re.enum_message_property AND re.enum_name = 'loan_transaction_type_enum')
+    LEFT JOIN {{ ref('r_enum_value') }} AS re ON (tm.mapped = re.enum_message_property AND re.enum_name = 'loan_transaction_type_enum')
 )
 
 SELECT 
