@@ -16,7 +16,7 @@ decoded_loantransaction AS (
         {{ decode_base64("encodedkey") }} AS external_id,
         AMOUNT AS amount,
         BALANCE AS outstanding_loan_balance_derived,
-        {{ decode_base64("parentloantransactionkey") }} AS parent_id,
+        {{ decode_base64("parentaccountkey") }} AS parent_id,
         creationdate AS created_date,
         {{ decode_base64("TYPE") }} AS transaction_type_raw,
         ENTRYDATE AS transaction_date,
