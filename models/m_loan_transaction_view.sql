@@ -17,7 +17,7 @@ decoded_loantransaction AS (
         AMOUNT AS amount,
         BALANCE AS outstanding_loan_balance_derived,
         creationdate AS created_date,
-        tm.mapped AS transaction_type, 
+        {{ decode_base64("TYPE") }} AS transaction_type_raw,
         ENTRYDATE AS transaction_date,
         PRINCIPALAMOUNT AS principal_portion_derived,
         INTERESTAMOUNT AS interest_portion_derived,
@@ -26,8 +26,7 @@ decoded_loantransaction AS (
         transactionid as id,
         {{ decode_base64("branchkey") }} AS branch_key,
         {{ decode_base64("userkey") }} AS user_key
-    FROM {{ ref('final_loantransaction') }} ft
-    LEFT JOIN type_mapping tm ON {{ decode_base64("ft.TYPE") }} = tm.original
+    FROM {{ ref('final_loantransaction') }}
 ),
 loan_transactions AS (
     SELECT 
@@ -44,12 +43,14 @@ loan_transactions AS (
         dlt.principal_portion_derived,
         dlt.interest_portion_derived,
         dlt.fee_charges_portion_derived,
-        dlt.penalty_charges_portion_derived
+        dlt.penalty_charges_portion_derived,
+        tm.mapped AS transaction_type
     FROM decoded_loantransaction AS dlt
+    LEFT JOIN type_mapping tm ON dlt.transaction_type_raw = tm.original
     LEFT JOIN {{ ref('m_office_view') }} AS mv_office ON dlt.branch_key = mv_office.external_id
     LEFT JOIN {{ ref('m_staff_view') }} AS mv_staff ON dlt.user_key = mv_staff.external_id
     LEFT JOIN {{ ref('m_loan_view') }} AS mv_loan ON dlt.external_id = mv_loan.external_id
-    LEFT JOIN public.r_enum_value AS re ON (dlt.transaction_type = re.enum_message_property AND re.enum_name = 'loan_transaction_type_enum')
+    LEFT JOIN public.r_enum_value AS re ON (tm.mapped = re.enum_message_property AND re.enum_name = 'loan_transaction_type_enum')
 )
 
 SELECT 
