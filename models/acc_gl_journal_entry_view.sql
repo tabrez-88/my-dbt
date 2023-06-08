@@ -1,11 +1,10 @@
-
 WITH decoded_gljournalentry AS (
     SELECT
         {{ decode_base64("encodedkey") }} AS encodedkey,
         {{ decode_base64("glaccount_encodedkey_oid") }} AS glaccount_encodedkey_oid,
         {{ decode_base64("entrydate") }} AS entrydate,
         {{ decode_base64("transactionid") }} AS transactionid,
-        {{ decode_base64("productkey") }} AS productkey,
+        {{ decode_base64("producttype") }} AS producttype,
         {{ decode_base64("notes") }} AS notes,
         {{ decode_base64("userkey") }} AS userkey,
         amount,
@@ -31,11 +30,12 @@ transformed_gljournalentry AS (
             WHEN reversal.gl_journal_entry_id IS NULL THEN false
             ELSE true
         END AS reversed,
-        COALESCE(loan_view.id, 0) AS account_id
+        COALESCE(loan_view.id, savings_view.id, 0) AS account_id
     FROM decoded_gljournalentry AS gle
     LEFT JOIN r_enum_value AS rv ON rv.enum_name = 'journal_entry_type_type_enum' AND rv.enum_message_property = gle.TYPE
     LEFT JOIN r_enum_value AS rv_account_type_enum ON rv_account_type_enum.enum_name = 'entity_account_type_enum' AND rv_account_type_enum.enum_message_property = gle.productkey
-    LEFT JOIN m_loan_view AS loan_view ON loan_view.external_id = gle.accountkey
+    LEFT JOIN m_loan_view AS loan_view ON loan_view.external_id = gle.accountkey AND gle.producttype = 'LOAN'
+    LEFT JOIN m_saving_account AS savings_view ON savings_view.external_id = gle.accountkey AND gle.producttype = 'SAVINGS'
     LEFT JOIN m_staff_view AS staff_view ON staff_view.external_id = gle.userkey
     LEFT JOIN m_office_view AS office_view ON office_view.external_id = gle.assignedbranchkey
     LEFT JOIN (
