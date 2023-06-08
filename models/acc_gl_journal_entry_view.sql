@@ -2,7 +2,7 @@ WITH decoded_gljournalentry AS (
     SELECT
         {{ decode_base64("encodedkey") }} AS encodedkey,
         {{ decode_base64("glaccount_encodedkey_oid") }} AS glaccount_encodedkey_oid,
-        {{ decode_base64("entrydate") }} AS entrydate,
+        entrydate AS entrydate,
         {{ decode_base64("transactionid") }} AS transactionid,
         {{ decode_base64("producttype") }} AS producttype,
         {{ decode_base64("notes") }} AS notes,
