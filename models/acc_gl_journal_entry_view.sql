@@ -17,7 +17,7 @@ WITH decoded_gljournalentry AS (
         {{ decode_base64("TYPE") }} AS TYPE,
         {{ decode_base64("assignedbranchkey") }} AS assignedbranchkey,
         created_on_utc
-    FROM {{ source('public', 'gljournalentry') }}
+    FROM {{ ref('gljournalentry') }}
 ),
 transformed_gljournalentry AS (
     SELECT
