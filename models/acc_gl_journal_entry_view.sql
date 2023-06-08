@@ -1,6 +1,3 @@
-{% macro decode_base64(field) %}
-    CONVERT_FROM(DECODE({{ field }}, 'base64'), 'utf-8')
-{% endmacro %}
 
 WITH decoded_gljournalentry AS (
     SELECT
