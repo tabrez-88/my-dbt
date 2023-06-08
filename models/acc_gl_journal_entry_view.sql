@@ -35,7 +35,7 @@ transformed_gljournalentry AS (
     LEFT JOIN r_enum_value AS rv ON rv.enum_name = 'journal_entry_type_type_enum' AND rv.enum_message_property = gle.TYPE
     LEFT JOIN r_enum_value AS rv_account_type_enum ON rv_account_type_enum.enum_name = 'entity_account_type_enum' AND rv_account_type_enum.enum_message_property = gle.productkey
     LEFT JOIN m_loan_view AS loan_view ON loan_view.external_id = gle.accountkey AND gle.producttype = 'LOAN'
-    LEFT JOIN m_saving_account AS savings_view ON savings_view.external_id = gle.accountkey AND gle.producttype = 'SAVINGS'
+    LEFT JOIN m_savings_account AS savings_view ON savings_view.external_id = gle.accountkey AND gle.producttype = 'SAVINGS'
     LEFT JOIN m_staff_view AS staff_view ON staff_view.external_id = gle.userkey
     LEFT JOIN m_office_view AS office_view ON office_view.external_id = gle.assignedbranchkey
     LEFT JOIN (
