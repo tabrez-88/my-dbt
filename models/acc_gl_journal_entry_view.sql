@@ -79,4 +79,4 @@ SELECT
     created_on_utc,
     last_modified_on_utc,
     submitted_on_date
-FROM transformed_gljournalentry;
+FROM transformed_gljournalentry
