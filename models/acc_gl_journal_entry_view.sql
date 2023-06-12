@@ -12,7 +12,7 @@ WITH decoded_gljournalentry AS (
         {{ decode_base64("accountkey") }} AS accountkey,
         {{ decode_base64("TYPE") }} AS TYPE,
         {{ decode_base64("assignedbranchkey") }} AS assignedbranchkey,
-        created_on_utc
+        entrydate AS created_on_utc
     FROM {{ ref('gljournalentry') }}
 ),
 transformed_gljournalentry AS (
