@@ -1,7 +1,7 @@
 WITH decoded_document AS (
     SELECT
         {{ decode_base64("encodedkey") }} AS encodedkey,
-        {{ decode_base64("LOCATION") }} AS "LOCATION",
+        "LOCATION" AS "LOCATION",
         filesize,
         creationdate,
         lastmodifieddate,
