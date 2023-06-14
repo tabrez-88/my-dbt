@@ -25,4 +25,4 @@ SELECT
     "description" AS description,
     "LOCATION" AS location,
     NULL AS storage_type_enum
-FROM decoded_document;
+FROM decoded_document
