@@ -17,7 +17,6 @@ WITH decoded_document AS (
 )
 SELECT
     "ID" AS id,
-    parent_entity_id,
     "NAME" AS name,
     "originalfilename" AS file_name,
     filesize AS size,
