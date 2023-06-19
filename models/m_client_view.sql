@@ -38,4 +38,4 @@ WITH base AS (
     LEFT JOIN m_staff_view s2 ON s2.external_id = c.assigneduserkey
     LEFT JOIN m_office_view o ON o.external_id = c.assignedbranchkey
 )
-SELECT * FROM base;
+SELECT * FROM base
