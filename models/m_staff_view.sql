@@ -8,7 +8,7 @@ WITH branch_office AS (
 ),
 roles AS (
     SELECT 
-        rv.id AS organisational_role_enum,
+        CAST(rv.id AS int2) AS organisational_role_enum,
         {{ decode_base64("encodedkey") }} AS role_encoded_key
     FROM {{ ref('role') }}
     LEFT JOIN {{ ref('m_role_view') }} AS rv ON rv.name = {{ decode_base64("NAME") }}
