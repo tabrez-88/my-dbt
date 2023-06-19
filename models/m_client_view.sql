@@ -22,7 +22,7 @@ WITH base AS (
         {{ decode_base64("profilesignaturekey") }} as signature_id,*/
         "ID" as account_no,
         {{ decode_base64("mobilephone1") }} as mobile_no,
-        {{ decode_base64("assignedbranchkey") }} as office_id,
+         o.id as office_id,
         CASE 
             WHEN {{ decode_base64("STATE") }} = 'ACTIVE' THEN 300 
             WHEN {{ decode_base64("STATE") }} = 'EXITED' THEN 600
@@ -33,6 +33,7 @@ WITH base AS (
         END as status_enum,
         "activationdate" as activation_date,
         "closeddate" as closedon_date
-        FROM {{ ref('final_client') }}
+        FROM {{ ref('final_client') }} c
+        LEFT JOIN m_office_view o ON o.external_id = c.assignedbranchkey
 )
 SELECT * FROM base
