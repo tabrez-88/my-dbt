@@ -1,8 +1,8 @@
 WITH source AS (
     SELECT
-        convert_from(decode("encodedkey", 'base64'), 'UTF8') as external_id,
+        {{ decode_base64("encodedkey")}} as external_id,
         "ID" as id,
-        convert_from(decode("NAME", 'base64'), 'UTF8') AS name,
+        {{ decode_base64("NAME") }} AS name,
         CREATIONDATE as opening_date
     FROM branch
 )
