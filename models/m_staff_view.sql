@@ -8,11 +8,10 @@ WITH branch_office AS (
 ),
 roles AS (
     SELECT 
-        {{ decode_base64("ID") }} AS role_id,
-        rv.enum_id AS organisational_role_enum,
+        rv.id AS organisational_role_enum,
         {{ decode_base64("encodedkey") }} AS role_encoded_key
     FROM {{ ref('role') }}
-    LEFT JOIN r_enum_value AS rv ON rv.enum_name = 'm_role_enum' AND rv.enum_value = {{ decode_base64("NAME") }}
+    LEFT JOIN {{ ref('m_role_view') }} AS rv ON rv.name = {{ decode_base64("NAME") }}
 ),
 user_with_decoded_keys AS (
     SELECT *,
