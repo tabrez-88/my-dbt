@@ -38,10 +38,10 @@ SELECT
     u.decoded_mobile_no AS mobile_no,
     u.decoded_email AS email_address,
     u.decoded_external_id as external_id,
-    NULL AS organisational_role_parent_staff_id,
+    CAST(NULL AS int8) AS organisational_role_parent_staff_id,
     u.decoded_is_active AS is_active,
-    u.CREATIONDATE AS joining_date,
-    NULL AS image_id  -- Assuming there's no equivalent field in the source table
+    CAST(u.CREATIONDATE AS date) AS joining_date,
+    CAST(NULL AS int8) AS image_id  -- Assuming there's no equivalent field in the source table
 
 FROM user_with_decoded_keys AS u
 LEFT JOIN branch_office AS bo ON u.decoded_assignedbranchkey = bo.office_external_id
