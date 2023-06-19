@@ -14,4 +14,4 @@ SELECT
     external_id,
     name,
     opening_date
-FROM source;
+FROM source
