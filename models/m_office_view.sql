@@ -9,7 +9,6 @@ WITH source AS (
 
 SELECT
     id::int8 as id,
-    NULL as parent_id,
     NULL as hierarchy,
     external_id,
     name,
