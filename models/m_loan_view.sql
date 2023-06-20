@@ -12,7 +12,9 @@ WITH base AS (
         {{ decode_base64("interestcalculationmethod") }} as decoded_interestcalculationmethod,
         {{ decode_base64("interestchargefrequency") }} as decoded_interestchargefrequency,
         {{ decode_base64("assignedbranchkey") }} as decoded_assignedbranchkey,
-        {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey
+        {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey,
+        {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit,
+        repaymentperiodcount
     FROM {{ ref('final_loanaccount') }}
 ),
 
@@ -39,6 +41,16 @@ SELECT
     b."ID" as account_no,
     CASE WHEN b.decoded_accountholdertype = 'CLIENT' THEN cv.id ELSE NULL END as client_id, 
     CASE WHEN b.decoded_accountholdertype = 'GROUP' THEN gv.id ELSE NULL END as group_id, 
+    CASE 
+        WHEN b.decoded_accountholdertype = 'CLIENT' THEN 1 
+        WHEN b.decoded_accountholdertype = 'GROUP' THEN 2 
+        ELSE NULL 
+    END as loan_type_enum,
+    CASE
+        WHEN b.decoded_interestcalculationmethod  = 'FLAT' THEN 0
+        WHEN b.decoded_interestcalculationmethod IN ('DECLINING_BALANCE_DISCOUNTED', 'DECLINING_BALANCE') THEN 1
+        ELSE NULL
+    END as  interest_method_enum,  
     
     ov.id as office_id,
     sv.id as created_by,
@@ -51,7 +63,16 @@ SELECT
     b.repaymentinstallments as number_of_repayments,
     b.repaymentperiodcount as repayment_period_frequency_enum,
     b.defaultfirstrepaymentduedateoffset as expected_firstrepaymenton_date,
-    b.decoded_interestcalculationmethod as interest_method_enum,
+    CASE 
+        WHEN b.decoded_repaymentperiodunit = 'DAYS' THEN 0 
+        WHEN b.decoded_repaymentperiodunit = 'WEEKS' THEN 1 
+        WHEN b.decoded_repaymentperiodunit IN ('YEARS', 'MONTHS') THEN 2
+    ELSE NULL 
+    END as repayment_period_frequency_enum,
+    CASE
+        WHEN b.decoded_repaymentperiodunit = 'YEARS' THEN b.repaymentperiodcount/12
+        ELSE b.repaymentperiodcount
+    END as repay_every,
     b.decoded_interestchargefrequency as interest_period_frequency_enum,
     b.interestbalance as interest_outstanding_derived,
     b.interestpaid as interest_repaid_derived,
