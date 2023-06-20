@@ -18,7 +18,7 @@ WITH base AS (
         "lastmodifieddate" as updated_on,
         "ID" as account_no,
         {{ decode_base64("mobilephone1") }} as mobile_no,
-        o.id as office_id,
+        COALESCE(o.id, 1) as office_id,
         CASE 
             WHEN {{ decode_base64("STATE") }} = 'ACTIVE' THEN 300 
             WHEN {{ decode_base64("STATE") }} = 'EXITED' THEN 600
