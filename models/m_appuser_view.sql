@@ -34,7 +34,7 @@ SELECT
     COALESCE(uo.firstname, '') as firstname,
     COALESCE(uo.lastname, '') as lastname,
     COALESCE(uo.password, '') as password,
-    uo.email,
+    COALESCE(uo.email, '') as email,
     TRUE as firsttime_login_remaining,
     TRUE as nonexpired,
     TRUE as nonlocked,
