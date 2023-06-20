@@ -13,7 +13,7 @@ WITH decoded_repayment AS (
 repayment_with_loan_id AS (
     SELECT 
         dr.id,
-        mv_loan.account_no AS loan_id,
+        mv_loan.id AS loan_id,
         dr.fromdate,
         dr.duedate,
         dr.principal_amount,
