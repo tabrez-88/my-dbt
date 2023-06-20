@@ -13,7 +13,9 @@ WITH base AS (
         {{ decode_base64("interestchargefrequency") }} as decoded_interestchargefrequency,
         {{ decode_base64("assignedbranchkey") }} as decoded_assignedbranchkey,
         {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey,
-        {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit
+        {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit,
+        {{ decode_base64("accountsubstate") }} as decoded_accountsubstate,
+        {{ decode_base64("accountstate") }} as decoded_accountstate
     FROM {{ ref('final_loanaccount') }}
 ),
 
@@ -71,6 +73,32 @@ SELECT
         WHEN b.decoded_repaymentperiodunit = 'YEARS' THEN b.repaymentperiodcount*12
         ELSE b.repaymentperiodcount
     END as repay_every,
+    CASE 
+        WHEN b.decoded_repaymentperiodunit = 'DAYS' THEN 0 
+        WHEN b.decoded_repaymentperiodunit = 'WEEKS' THEN 1 
+        WHEN b.decoded_repaymentperiodunit = 'MONTHS' THEN 2
+        WHEN b.decoded_repaymentperiodunit = 'YEARS' THEN 3
+    ELSE NULL 
+    END as term_period_frequency_enum,
+
+    CASE
+        WHEN b.decoded_accountstate = 'ACTIVE' THEN 300
+        WHEN b.decoded_accountstate = 'ACTIVE_IN_ARREARS' THEN 300
+        WHEN b.decoded_accountstate = 'APPROVED' THEN 200
+        WHEN b.decoded_accountstate = 'CLOSED' THEN 600
+        WHEN b.decoded_accountstate = 'CLOSED_REJECTED' THEN 500
+        WHEN b.decoded_accountstate = 'CLOSED_WRITTEN_OFF' THEN 601
+        WHEN b.decoded_accountstate = 'PARTIAL_APPLICATION' THEN 0
+        WHEN b.decoded_accountstate = 'PENDING_APPROVAL' THEN 100
+    ELSE NULL
+    END as loan_status_id,
+    CASE
+        WHEN b.decoded_accountsubstate = 'WITHDRAWN' THEN 400
+        WHEN b.decoded_accountsubstate = 'REFINANCED' THEN 600
+        WHEN b.decoded_accountsubstate = 'RESCHEDULED' THEN 602
+    ELSE NULL
+    END as loan_sub_status_id
+
     b.decoded_interestchargefrequency as interest_period_frequency_enum,
     b.interestbalance as interest_outstanding_derived,
     b.interestpaid as interest_repaid_derived,
@@ -87,7 +115,3 @@ LEFT JOIN office_view ov
     ON b.decoded_assignedbranchkey = ov.external_id    
 LEFT JOIN staff_view sv 
     ON b.decoded_assigneduserkey = sv.external_id    
-/*
-     {{ decode_base64("accountholdertype") }} as legal_form_id,
-    {{ decode_base64("accountstate") }} as loan_status_id,
-    {{ decode_base64("accountsubstate") }} as loan_sub_status_id*/
