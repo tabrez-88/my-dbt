@@ -37,7 +37,7 @@ loan_transactions AS (
         dlt.outstanding_loan_balance_derived,
         mv_office.id AS office_id,
         dlt.created_date,
-        mv_loan.account_no AS loan_id,
+        mv_loan.id AS loan_id,
         CASE 
             WHEN dlt.transaction_type_raw = 'BRANCH_CHANGED' THEN 3
             WHEN dlt.transaction_type_raw = 'DEFERRED_INTEREST_APPLIED' THEN 11
