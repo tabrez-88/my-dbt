@@ -28,7 +28,7 @@ user_office AS (
 SELECT 
     uo.id::int8 as id,
     FALSE as is_deleted,
-    uo.office_id,
+    COALESCE(uo.office_id, 1) as office_id,
     uo.id as staff_id,
     uo.username,
     COALESCE(uo.firstname, '') as firstname,
