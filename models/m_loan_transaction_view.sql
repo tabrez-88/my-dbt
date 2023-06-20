@@ -33,7 +33,7 @@ loan_transactions AS (
     SELECT 
         dlt.external_id,
         dlt.id,
-        dlt.amount,
+        COALESCE(dlt.amount, 0) as amount,
         dlt.outstanding_loan_balance_derived,
         mv_office.id AS office_id,
         dlt.created_date,
