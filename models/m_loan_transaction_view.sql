@@ -38,7 +38,33 @@ loan_transactions AS (
         mv_office.id AS office_id,
         dlt.created_date,
         mv_loan.account_no AS loan_id,
-        re.enum_id AS transaction_type_enum,
+        CASE 
+            dlt.transaction_type_raw = 'BRANCH_CHANGED' THEN 3
+            dlt.transaction_type_raw = 'DEFERRED_INTEREST_APPLIED' THEN 11
+            dlt.transaction_type_raw = 'DEFERRED_INTEREST_APPLIED_ADJUSTMENT' THEN 11
+            dlt.transaction_type_raw = 'DEFERRED_INTEREST_PAID' THEN 2
+            dlt.transaction_type_raw = 'DEFERRED_INTEREST_PAID_ADJUSTMENT' THEN 10
+            dlt.transaction_type_raw = 'DISBURSMENT' THEN 1
+            dlt.transaction_type_raw = 'DISBURSMENT_ADJUSTMENT' THEN 5
+            dlt.transaction_type_raw = 'FEE' THEN 10
+            dlt.transaction_type_raw = 'FEE_ADJUSTMENT' THEN 10
+            dlt.transaction_type_raw = 'FEE_CHARGED' THEN 10
+            dlt.transaction_type_raw = 'import' THEN 1
+            dlt.transaction_type_raw = 'INTEREST_APPLIED' THEN 11
+            dlt.transaction_type_raw = 'INTEREST_APPLIED_ADJUSTMENT' THEN 11
+            dlt.transaction_type_raw = 'INTEREST_DUE_REDUCED' THEN 4
+            dlt.transaction_type_raw = 'INTEREST_LOCKED' THEN 11
+            dlt.transaction_type_raw = 'INTEREST_UNLOCKED' THEN 11
+            dlt.transaction_type_raw = 'PENALTIES_DUE_REDUCED' THEN 9
+            dlt.transaction_type_raw = 'PENALTY_ADJUSTMENT' THEN 9
+            dlt.transaction_type_raw = 'PENALTY_APPLIED' THEN 10
+            dlt.transaction_type_raw = 'REPAYMENT' THEN 2
+            dlt.transaction_type_raw = 'REPAYMENT_ADJUSTMENT' THEN 2
+            dlt.transaction_type_raw = 'TRANSFER' THEN 7
+            dlt.transaction_type_raw = 'TRANSFER_ADJUSTMENT' THEN 2
+            dlt.transaction_type_raw = 'WRITE_OFF' THEN 6
+            dlt.transaction_type_raw = 'WRITE_OFF_ADJUSTMENT' THEN 6
+        END AS transaction_type_enum,
         mv_staff.id AS created_by,
         dlt.transaction_date,
         dlt.principal_portion_derived,
@@ -50,7 +76,6 @@ loan_transactions AS (
     LEFT JOIN {{ ref('m_office_view') }} AS mv_office ON dlt.branch_key = mv_office.external_id
     LEFT JOIN {{ ref('m_staff_view') }} AS mv_staff ON dlt.user_key = mv_staff.external_id
     LEFT JOIN {{ ref('m_loan_view') }} AS mv_loan ON dlt.parent_id = mv_loan.external_id
-    LEFT JOIN {{ ref('r_enum_value') }} AS re ON (tm.mapped = re.enum_message_property AND re.enum_name = 'loan_transaction_type_enum')
 )
 
 SELECT 
