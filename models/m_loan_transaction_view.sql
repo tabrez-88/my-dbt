@@ -49,7 +49,7 @@ loan_transactions AS (
             WHEN dlt.transaction_type_raw = 'FEE' THEN 10
             WHEN dlt.transaction_type_raw = 'FEE_ADJUSTMENT' THEN 10
             WHEN dlt.transaction_type_raw = 'FEE_CHARGED' THEN 10
-            WHEN dlt.transaction_type_raw = 'import' THEN 1
+            WHEN dlt.transaction_type_raw = 'IMPORT' THEN 1
             WHEN dlt.transaction_type_raw = 'INTEREST_APPLIED' THEN 11
             WHEN dlt.transaction_type_raw = 'INTEREST_APPLIED_ADJUSTMENT' THEN 11
             WHEN dlt.transaction_type_raw = 'INTEREST_DUE_REDUCED' THEN 4
