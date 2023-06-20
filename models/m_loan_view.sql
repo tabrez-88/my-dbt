@@ -14,7 +14,6 @@ WITH base AS (
         {{ decode_base64("assignedbranchkey") }} as decoded_assignedbranchkey,
         {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey,
         {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit,
-        {{ decode_base64("accountsubstate") }} as decoded_accountsubstate,
         {{ decode_base64("accountstate") }} as decoded_accountstate
     FROM {{ ref('final_loanaccount') }}
 ),
@@ -93,9 +92,9 @@ SELECT
     ELSE NULL
     END as loan_status_id,
     CASE
-        WHEN b.decoded_accountsubstate = 'WITHDRAWN' THEN 400
-        WHEN b.decoded_accountsubstate = 'REFINANCED' THEN 600
-        WHEN b.decoded_accountsubstate = 'RESCHEDULED' THEN 602
+        WHEN b.accountsubstate = 'WITHDRAWN' THEN 400
+        WHEN b.accountsubstate = 'REFINANCED' THEN 600
+        WHEN b.accountsubstate = 'RESCHEDULED' THEN 602
     ELSE NULL
     END as loan_sub_status_id,
 
