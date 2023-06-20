@@ -97,7 +97,7 @@ SELECT
         WHEN b.decoded_accountsubstate = 'REFINANCED' THEN 600
         WHEN b.decoded_accountsubstate = 'RESCHEDULED' THEN 602
     ELSE NULL
-    END as loan_sub_status_id
+    END as loan_sub_status_id,
 
     b.decoded_interestchargefrequency as interest_period_frequency_enum,
     b.interestbalance as interest_outstanding_derived,
