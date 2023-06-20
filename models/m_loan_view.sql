@@ -13,8 +13,7 @@ WITH base AS (
         {{ decode_base64("interestchargefrequency") }} as decoded_interestchargefrequency,
         {{ decode_base64("assignedbranchkey") }} as decoded_assignedbranchkey,
         {{ decode_base64("assigneduserkey") }} as decoded_assigneduserkey,
-        {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit,
-        repaymentperiodcount
+        {{ decode_base64("repaymentperiodunit") }} as decoded_repaymentperiodunit
     FROM {{ ref('final_loanaccount') }}
 ),
 
