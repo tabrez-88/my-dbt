@@ -103,8 +103,8 @@ SELECT
         WHEN b.decoded_interestchargefrequency IN ('EVERY_MONTH','EVERY_FOUR_WEEKS') THEN 2
         WHEN b.decoded_interestchargefrequency = 'EVERY_DAY' THEN 1
     ELSE NULL
-    as interest_period_frequency_enum,
-    
+    END as interest_period_frequency_enum,
+
     b.interestbalance as interest_outstanding_derived,
     b.interestpaid as interest_repaid_derived,
     b.interestrate as nominal_interest_rate_per_period,
