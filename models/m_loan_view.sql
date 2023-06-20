@@ -37,11 +37,9 @@ staff_view AS (
 SELECT 
     b.external_id,
     b."ID" as account_no,
-    CASE 
-        WHEN b.decoded_accountholdertype = 'CLIENT' THEN cv.id
-        WHEN b.decoded_accountholdertype = 'GROUP' THEN gv.id
-        ELSE NULL
-    END as client_id_group_id,
+    CASE WHEN b.decoded_accountholdertype = 'CLIENT' THEN cv.id ELSE NULL END as client_id, 
+    CASE WHEN b.decoded_accountholdertype = 'GROUP' THEN gv.id ELSE NULL END as group_id, 
+    
     ov.id as office_id,
     sv.id as created_by,
     b.closeddate as closedon_date,
