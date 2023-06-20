@@ -37,6 +37,7 @@ staff_view AS (
 )
 
 SELECT 
+    ROW_NUMBER() OVER () as id,
     b.external_id,
     b."ID" as account_no,
     CASE WHEN b.decoded_accountholdertype = 'CLIENT' THEN cv.id ELSE NULL END as client_id, 
