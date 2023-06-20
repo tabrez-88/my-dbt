@@ -7,7 +7,7 @@
 SELECT 
     ROW_NUMBER() OVER () as id,
     {{ decode_base64("encodedkey") }} as external_id,
-    office.id as office_id,
+    COALESCE(office.id, 1) as office_id,
     staff.id as staff_id,
     "creationdate" as submittedon_date,
     {{ decode_base64("groupname") }} as display_name,
