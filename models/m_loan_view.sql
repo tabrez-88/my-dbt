@@ -68,7 +68,7 @@ SELECT
     ELSE NULL 
     END as repayment_period_frequency_enum,
     CASE
-        WHEN b.decoded_repaymentperiodunit = 'YEARS' THEN b.repaymentperiodcount/12
+        WHEN b.decoded_repaymentperiodunit = 'YEARS' THEN b.repaymentperiodcount*12
         ELSE b.repaymentperiodcount
     END as repay_every,
     b.decoded_interestchargefrequency as interest_period_frequency_enum,
