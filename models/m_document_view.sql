@@ -9,7 +9,7 @@ WITH decoded_document AS (
         documentholderkey,
         createdbyuserkey,
         {{ decode_base64("originalfilename") }} AS originalfilename,
-        {{ decode_base64("description") }} AS description,
+        "description" AS description,
         documentholdertype,
         "ID",
         {{ decode_base64("TYPE") }} AS "TYPE"
