@@ -61,7 +61,6 @@ SELECT
     b.lastmodifieddate as last_modified_on_utc,
     b.loanamount as principal_amount,
     b.repaymentinstallments as number_of_repayments,
-    b.repaymentperiodcount as repayment_period_frequency_enum,
     b.defaultfirstrepaymentduedateoffset as expected_firstrepaymenton_date,
     CASE 
         WHEN b.decoded_repaymentperiodunit = 'DAYS' THEN 0 
